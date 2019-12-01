@@ -161,6 +161,40 @@ double Graph::GetMinDistance(string city1,string city2){
     return  dist.find(city2)->second;
 }
 
+bool Graph::isGraphConnected(){
+    set<Node*> discovered;
+    queue<Node*> frontier;
+    
+    if(graph->begin()==graph->end()){
+        return false;
+    }
+    frontier.push(graph->begin()->second);
+    discovered.insert(graph->begin()->second);
+    
+    while(!frontier.empty()) {
+        Node* current = frontier.front();
+        frontier.pop();
+        vector<Edge*> *adj =current->adjacentsList();
+        for(int i = 0; i<adj->size();++i) {
+            if(discovered.find(adj->at(i)->getNode())!=discovered.end()){
+                frontier.push(adj->at(i)->getNode());
+                discovered.insert(adj->at(i)->getNode());
+            }
+        }
+    }
+    
+    set<Node*> total;
+    map<string,Node*>::iterator it;
+    for(it=graph->begin();it!=graph->end();++it) {
+        total.insert(it->second);
+    }
+    
+    if(discovered==total) {
+        return true;
+    }
+    return false;
+}
+
 int main() {
     cout << "Graph Example 2.0\n";
     Graph g(false);
