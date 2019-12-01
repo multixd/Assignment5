@@ -122,22 +122,26 @@ double Graph::GetMinDistance(string city1,string city2){
     }
     
     map<string,unsigned int>::iterator i;
+    vector<string>::iterator iy;
     string num;
     unsigned int min = -1;
-    
+
     
     while(!nodes.empty()){
-        for(i=dist.begin();i!=dist.end();++i){
-            if(i->second < min){
-                min = i->second;
-                num = i->first;
+        
+        for(iy=nodes.begin();iy!=nodes.end();++iy){
+            i=dist.find(*iy);
+            if(i!=dist.end()) {
+                if(i->second < min){
+                    min =i->second;
+                    num = *iy;
+                }
             }
         }
-        vector<string>::iterator iy;
-        for(iy= nodes.begin();iy!=nodes.end();++iy) {
-            if(*iy==num) {
-                nodes.erase(iy);
-                break;
+        
+        for(int j =0;j<nodes.size();++j) {
+            if(nodes.at(j) == num) {
+                nodes.erase(nodes.begin()+j);
             }
         }
         
@@ -150,7 +154,7 @@ double Graph::GetMinDistance(string city1,string city2){
                 (dist.find(adj->at(i)->getNode()->getPayload()))->second = alternative;
             }
         }
-        num = nullptr;
+        num = "";
         min = -1;
     }
     return  dist.find(city2)->second;
@@ -163,14 +167,16 @@ int main() {
     g.addNode("a");
     g.addNode("b");
     g.addNode("c");
+    g.addNode("d");
 
     g.addEdge("a","b",10);
     g.addEdge("b","c",5);
     g.addEdge("c","a",9);
-    if(g.IsThereTripletClique()) {
-        cout << "Yes" ;
-    }
+//    if(g.IsThereTripletClique()) {
+//        cout << "Yes" ;
+//    }
 
+    cout << g.GetMinDistance("a", "c");
     //g.printGraph();
 
 }
