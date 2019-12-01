@@ -144,16 +144,16 @@ double Graph::GetMinDistance(string city1,string city2){
         vector<Edge*> *adj = (graph->find(num))->second->adjacentsList();
     
         for(int i = 0; i<adj->size();++i){
-            double weight = (dist.find(adj->at(i)->getNode()))->second;
+            double weight = (dist.find(adj->at(i)->getNode()->getPayload()))->second;
             double alternative =adj->at(i)->getWeight()+ (dist.find(num))->second;
             if(alternative < weight){
-                (dist.find(adj->at(i)->getNode()))->second = alternative;
+                (dist.find(adj->at(i)->getNode()->getPayload()))->second = alternative;
             }
         }
         num = nullptr;
         min = -1;
     }
-    return  dist.find((graph->find(city2))->second)->second;
+    return  dist.find(city2)->second;
 }
 
 int main() {
