@@ -132,7 +132,7 @@ double Graph::GetMinDistance(string city1,string city2){
         for(iy=nodes.begin();iy!=nodes.end();++iy){
             i=dist.find(*iy);
             if(i!=dist.end()) {
-                if(i->second < min){
+                if(i->second <= min){
                     min =i->second;
                     num = *iy;
                 }
