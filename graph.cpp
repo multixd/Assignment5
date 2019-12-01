@@ -176,7 +176,7 @@ bool Graph::isGraphConnected(){
         frontier.pop();
         vector<Edge*> *adj =current->adjacentsList();
         for(int i = 0; i<adj->size();++i) {
-            if(discovered.find(adj->at(i)->getNode())!=discovered.end()){
+            if(discovered.find(adj->at(i)->getNode())==discovered.end()){
                 frontier.push(adj->at(i)->getNode());
                 discovered.insert(adj->at(i)->getNode());
             }
